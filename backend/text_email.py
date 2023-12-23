@@ -14,11 +14,14 @@ message_body = 'Message Content'
 cc_header = ', '.join(email_cc)
 message = f"Subject: {subject}\nTo: {email_to}\nCc: {cc_header}\n\n{message_body}"
 
-server = smtplib.SMTP("smtp.gmail.com", 587)
-server.starttls()
 
-server.login(email_from, password)
-server.sendmail(email_from, [email_to] + email_cc, message)
-print(f"Email has been successfully sent to {email_to} with CC to {', '.join(email_cc)}")
+def send_mail():
+    """ Send Mail to Receiver """
+    server = smtplib.SMTP("smtp.gmail.com", 587)
+    server.starttls()
+    server.login(email_from, password)
+    server.sendmail(email_from, [email_to] + email_cc, message)
+    print(f"Email has been successfully sent to {email_to} with CC to {', '.join(email_cc)}")
 
-server.quit()
+    server.quit()
+
