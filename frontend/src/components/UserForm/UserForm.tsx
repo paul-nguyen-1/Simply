@@ -9,7 +9,7 @@ const UserForm = () => {
     const [recruiterFollowUp, setRecruiterFollowUp] = useState('');
     const [jobDescription, setJobDescription] = useState('');
 
-    const handleSubmit = (e: any) => {
+    const handleSubmit = async (e: any) => {
         e.preventDefault();
         console.log({
             company,
@@ -26,6 +26,32 @@ const UserForm = () => {
         setDeadline('');
         setRecruiterFollowUp('');
         setJobDescription('');
+        try {
+            const response = await fetch('http://localhost:3000/', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                company,
+                position,
+                status,
+                deadline,
+                recruiterFollowUp,
+                jobDescription,
+              }),
+            });
+      
+            if (response.ok) {
+              // Handle success, e.g., show a success message or redirect
+              console.log('Data submitted successfully!');
+            } else {
+              // Handle errors, e.g., show an error message
+              console.error('Error submitting data:', response.status, response.statusText);
+            }
+          } catch (error: any) {
+            console.error('Error:', error.message);
+          }
     };
 
     return (
